@@ -1,0 +1,7 @@
+ThemeFile=alan_dark
+Font=Uslabisans
+FontHeight=15
+Term=xterm-256color
+Scrollbar=none
+BellPopup=yes
+CursorType=block
