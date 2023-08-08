@@ -1,0 +1,44 @@
+# https://github.com/be5invis/Iosevka/blob/main/doc/custom-build.md
+
+[buildPlans.alan-term]
+family = "Alan Term"
+spacing = "term"
+no-cv-ss = false
+export-glyph-names = true
+#serifs = "slab"
+serifs = "sans"
+
+#[buildPlans.alan-term.slopes.upright]
+#angle = 0
+#shape = "upright"
+#menu = "upright"
+#css = "normal"
+
+[buildPlans.alan-term.slopes.italic]
+angle = 10
+shape = "italic"
+menu = "italic"
+css = "italic"
+
+[buildPlans.alan-term.variants]
+inherits = "ss20"
+
+[buildPlans.alan-term.variants.italic]
+h = "tailed-serifless"
+m = "tailed-serifless"
+n = "tailed-serifless"
+
+[buildPlans.alan-term.variants.design]
+zero = "dotted"
+percent = "rings-continuous-slash"
+
+[buildPlans.alan-term.widths.normal]
+shape = 500
+menu = 5
+css = "normal"
+
+[buildPlans.alan-term.ligations]
+enables  = ["connected-underscore"]
+
+[collectPlans.alan-term]
+from = ["alan-term"]

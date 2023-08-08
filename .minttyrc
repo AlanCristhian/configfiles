@@ -1,7 +1,39 @@
-ThemeFile=alan_dark
-Font=Uslabisans
-FontHeight=15
-Term=xterm-256color
+#Transparency=Low
+
+Font=Alan Term
+FontHeight=16
+Padding=0
+AutoLeading=1
+
+Term=tmux-256color
 Scrollbar=none
 BellPopup=yes
-CursorType=block
+CursorType=line
+BoldAsFont=yes
+FontSmoothing=full
+LigaturesSupport=1
+AppName=Mintty+Bash+Tmux
+AppLaunchCmd='C:\msys64\usr\bin\mintty.exe -w max -B void -T Mintty+Bash+Tmux'
+
+# Color Scheme
+HighlightBackgroundColour=190,165,71
+HighlightForegroundColour=0,0,0
+ForegroundColour=206,206,206
+BackgroundColour=40,40,40
+CursorColour=255,255,255
+Black=20,20,20
+BoldBlack=0,0,0
+Red=253,139,139
+BoldRed=226,85,85
+Green=101,189,96
+BoldGreen=37,147,30
+Yellow=190,165,71
+BoldYellow=148,116,0
+Blue=136,162,255
+BoldBlue=81,113,229
+Magenta=226,138,231
+BoldMagenta=193,83,199
+Cyan=74,187,187
+BoldCyan=3,145,145
+White=163,163,163
+BoldWhite=115,115,115
