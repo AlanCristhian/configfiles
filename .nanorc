@@ -77,7 +77,7 @@ set linenumbers
 ## Enable vim-style lock-files.  This is just to let a vim user know you
 ## are editing a file [s]he is trying to edit and vice versa.  There are
 ## no plans to implement vim-style undo state in these files.
-set locking
+# set locking
 
 ## Fall back to slow libmagic to try and determine an applicable syntax.
 # set magic
@@ -128,7 +128,7 @@ set positionlog
 # set punct "!.?"
 
 ## Make status-bar messages disappear after 1 keystroke instead of after 20.
-set quickblank
+# set quickblank
 
 ## The regular expression that matches quoting characters in email
 ## or line-comment introducers in source code.  The default is:
@@ -206,28 +206,24 @@ set wordchars "_"
 set zap
 
 ## Hide the bars plus help lines and use the whole terminal as edit area.
-#set zero
+# set zero
 
 ## Paint the interface elements of nano.  These are examples; there are
 ## no colors by default, except for errorcolor and spotlightcolor.
-set titlecolor white,black
-set promptcolor lightblack,lightcyan
-set statuscolor white,lightblack
-set errorcolor black,lightred
-set spotlightcolor lightblack,lightyellow
-set selectedcolor lightblack,yellow
-set stripecolor brightblack
-set scrollercolor lightblack,black
-set numbercolor lightwhite
-set keycolor cyan
-set functioncolor green
+set titlecolor black,blue
+set promptcolor black,yellow
+set statuscolor black,blue
+set errorcolor black,red
+set stripecolor bold,lightblack
+set numbercolor lightblack
+set selectedcolor black,white
 
 ## === Syntax coloring ===
 ## For all details, see 'man nanorc', section SYNTAX HIGHLIGHTING.
 
 include "/usr/share/nano/*.nanorc"
-include "~/.nano/*.nanorc"
-include "/c/Users/Ruiz/rep/thorns/thorns.nanorc"
+include "/home/alan/.nano/*.nanorc"
+
 
 ## === Key bindings ===
 
@@ -271,14 +267,17 @@ bind M-L "{nextword}{mark}{prevword}{execute}|sed 's/.*/\L&/'{enter}" main
 ## such as ^O for Open, ^F for Find, ^H for Help, and ^Q for Quit,
 ## then uncomment |sed 's/.*/\L&/'
 
+## Unbind weird behaviour
+unbind M-K all # cut
+unbind M-J all  # justify paragraph or regionc
+
+
 ## ========================
 ## Make my own key bindings
 ## ========================
 
-
-#bind ^I indent main
-bind ^W exit main
-bind ^W exit help
+bind ^Q exit main
+bind ^Q exit help
 
 bind M-F findnext main
 bind M-F findnext help
@@ -300,7 +299,9 @@ bind M-. recordmacro main
 bind M-, runmacro main
 bind M-} findbracket main  # go to the matching bracket
 bind ^K suspend main
-#bind F6 speller main
+bind ^S savefile main
+bind ^Space complete main
+bind F4 wordcount main
 
 ## ========================
 ## Bind copy, cut and paste
@@ -310,31 +311,30 @@ bind ^K suspend main
 bind Sh-M-X cut all
 bind Sh-M-C copy all
 bind Sh-M-V paste all
-bind ^C "{cut}{mark}{paste}{execute}|~/.nano/clp{enter}{undo}{undo}{undo}" main
-bind ^X "{cut}{mark}{paste}{execute}|~/.nano/clp{enter}{undo}{undo}" main
-bind ^V "{execute}~/.nano/clp{enter}" main
+bind ^C "{cut}{mark}{paste}{execute}|xsel -ib{enter}{undo}{undo}{undo}" main
+bind ^X "{cut}{mark}{paste}{execute}|xsel -ib{enter}{undo}{undo}" main
+bind ^V "{execute}xsel -ob{enter}" main
 
 ## SEARCH: paste
 bind ^F whereis main
 bind ^F whereis help
 bind ^F whereis browser
-bind ^V "{cancel}{mark}{execute}~/.nano/clp{enter}{cut}{undo}{undo}{whereis}{paste}" search
+bind ^V "{cancel}{mark}{execute}xsel -ob{enter}{cut}{undo}{undo}{whereis}{paste}" search
 
 ## REPLACE: paste
 bind ^R replace main
-bind ^W cancel replace
-bind ^V "{cancel}{mark}{execute}~/.nano/clp{enter}{cut}{undo}{undo}{replace}{paste}" replace
+bind ^V "{cancel}{mark}{execute}xsel -ob{enter}{cut}{undo}{undo}{replace}{paste}" replace
 
 ## REPLACEWITH: paste
-bind ^V "{cancel}{mark}{execute}~/.nano/clp{enter}{cut}{undo}{undo}{replace}{enter}{paste}" replacewith
+bind ^V "{cancel}{mark}{execute}xsel -ob{enter}{cut}{undo}{undo}{replace}{enter}{paste}" replacewith
 
 ## GOTOLINE: paste
 bind ^G gotoline main
-bind ^V "{cancel}{mark}{execute}~/.nano/clp{enter}{cut}{undo}{undo}{gotoline}{paste}" gotoline
+bind ^V "{cancel}{mark}{execute}xsel -ob{enter}{cut}{undo}{undo}{gotoline}{paste}" gotoline
 
 ## WRITEOUT: paste
 bind M-S writeout main
-bind ^V "{cancel}{mark}{execute}~/.nano/clp{enter}{cut}{undo}{undo}{writeout}{paste}" writeout
+bind ^V "{cancel}{mark}{execute}xsel -ob{enter}{cut}{undo}{undo}{writeout}{paste}" writeout
 
 ## OPEN EXISTENT FILE
 ## ==================
@@ -349,17 +349,17 @@ unbind ^Y browser
 unbind ^V browser
 bind ^O "{insert}{flipnewbuffer}" main
 bind ^C "{exit}{cancel}" browser
-bind ^W "{exit}{cancel}" browser
-bind ^W "{cancel}{exit}{cancel}" whereisfile
+bind ^Q "{exit}{cancel}" browser
+bind ^Q "{cancel}{exit}{cancel}" whereisfile
 bind ^G gotodir browser
 
 # Paste in browser search
-bind ^V "{cancel}{exit}{cancel}{mark}{execute}~/.nano/clp{enter}{cut}{undo}{undo}{insert}{flipnewbuffer}{browser}{whereis}{paste}" whereisfile
+bind ^V "{cancel}{exit}{cancel}{mark}{execute}xsel -ob{enter}{cut}{undo}{undo}{insert}{flipnewbuffer}{browser}{whereis}{paste}" whereisfile
 
 ## EXECUTE: paste
 bind ^E execute main
-bind ^V "{cancel}{mark}{execute}~/.nano/clp{enter}{cut}{undo}{undo}{execute}{paste}" execute
-bind ^W cancel execute
+bind ^V "{cancel}{mark}{execute}xsel -ob{enter}{cut}{undo}{undo}{execute}{paste}" execute
+bind ^Q cancel execute
 
 ## Open a new void and unnamed buffer
 bind ^N "{execute}{flipnewbuffer}echo -n{enter}" main
@@ -370,32 +370,26 @@ bind ^D "{copy}{paste}{up}{end}" main
 ## Select all
 bind ^A "{firstline}{home}{mark}{lastline}{end}" main
 
-## Remove trailing whitespace on save
-bind ^S savefile main
+## Remove trailing whitespace
 bind F10 "{execute}|sed 's/\s\+$//'{enter}" main
 
-## Static Snippets
-bind M-R "{mark}{prevword}{execute}|~/.nano/nano_snippets{enter}{home}{whereis}%%{enter}{replace}%%{enter}{enter}y{cancel}" main
+## Snippet
+bind M-R "{mark}{prevword}{execute}|read a;if [ -f ~/.nano/snippets/$a ];then cat ~/.nano/snippets/$a|sed -Ez '$ s/\n+$//';else echo -n '$a%%';fi{enter}{home}{whereis}%%{enter}{mark}{right}{right}{delete}" main
 
-## Live Snippets
-bind M-N "{whereis}%%{enter}{replace}%%{enter}{enter}y{cancel}" main
+## Real time snippets
+bind M-N "{whereis}%%{enter}{mark}{right}{right}{delete}" main
 
 ## math on selectec text
-bind M-M "{cut}{execute}~/.nano/math {paste}{enter}" main
+bind M-M "{cut}{execute}python3 -c 'from math import*;from statistics import*;print("{paste} =",f"{{}{paste}:_.2f}")'{enter}{up}{end}" main
 
 ## sort lines
 bind F2 "{cut}{mark}{paste}{execute}|sort -f|uniq{enter}{backspace}" main
 
 ## reverse order
-bind F3 "{cut}{mark}{paste}{execute}|sort -f -r|uniq{enter}{backspace}" main
+bind F3 "{cut}{mark}{paste}{execute}|sort -fr|uniq{enter}{backspace}" main
 
 ## Move line up
-bind M-K "{cut}{up}{paste}{up}{end}" main
-#bind Sh-M-K "{end}{mark}{home}{home}{cut}{delete}{up}{enter}{up}{paste}" main
+bind M-K "{end}{mark}{home}{home}{cut}{delete}{up}{enter}{up}{paste}" main
 
 ## Move line down
-bind M-J "{cut}{down}{paste}{up}{end}" main
-#bind Sh-M-J "{end}{mark}{home}{home}{cut}{delete}{end}{enter}{paste}" main
-
-## Open and autoclose curly braces
-bind M-{ "{{}}{left}{enter}{up}{end}{enter}{indent}" main
+bind M-J "{end}{mark}{home}{home}{cut}{delete}{end}{enter}{paste}" main
