@@ -115,3 +115,9 @@ fi
 alias py=python3
 alias suno="sudo nano -f .nanorc"
 alias reno="sudo nano -v -f .nanorc"
+
+if [ -n "$(tty|grep '/dev/pts')" ]; then
+    if [ -z "${TMUX}" ]; then
+        tmux a > /dev/null; exit
+    fi
+fi
