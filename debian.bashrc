@@ -87,7 +87,7 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
+# some more ls aliasestmux kill-window -t window-number
 #alias ll='ls -l'
 #alias la='ls -A'
 #alias l='ls -CF'
@@ -112,12 +112,13 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
 alias py=python3
 alias suno="sudo nano -f .nanorc"
 alias reno="sudo nano -v -f .nanorc"
 
-if [ -n "$(tty|grep '/dev/pts')" ]; then
-    if [ -z "${TMUX}" ]; then
-        tmux a > /dev/null; exit
-    fi
+# Create a new tmux session if a new window is opened
+if [ $TERM = "xterm-256color" ]; then
+    tmux
+    exit
 fi
