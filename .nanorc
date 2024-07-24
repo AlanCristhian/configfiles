@@ -1,5 +1,6 @@
+## Ññ aäáâàã eëéêèẽ iïíîìĩ oöóôòõ uüúûùũ æ Æ œ Œ -> ○○○○○○○○○○ .:,:´
 ## Sample initialization file for GNU nano.
-## aäáâàã eëéêèẽ iïíîìĩ oöóôòõ uüúûùũ æ Æ œ Œ ->
+## hermit, jetbrains mono, league mono
 ## For the options that take parameters, the default value is shown.
 ## Other options are unset by default. To make sure that an option
 ## is disabled, you can use "unset <option>".
@@ -214,7 +215,7 @@ set zap
 set errorcolor bold,italic,red,normal
 set numbercolor lightblack
 set promptcolor bold,italic,yellow,normal
-set selectedcolor black,cyan
+set selectedcolor lightwhite,lightblack
 set spotlightcolor black,yellow
 set statuscolor bold,italic,blue,normal
 set stripecolor bold,lightblack
@@ -313,8 +314,8 @@ bind F4 wordcount main
 bind Sh-M-X cut all
 bind Sh-M-C copy all
 bind Sh-M-V paste all
-bind ^C "{cut}{mark}{paste}{execute}|xsel -ib{enter}{undo}{undo}{undo}" main
-bind ^X "{cut}{mark}{paste}{execute}|xsel -ib{enter}{undo}{undo}" main
+bind ^C "{cut}{mark}{paste}{execute}|xsel -ipsb{enter}{undo}{undo}{undo}" main
+bind ^X "{cut}{mark}{paste}{execute}|xsel -ipsb{enter}{undo}{undo}" main
 bind ^V "{execute}xsel -ob{enter}" main
 
 ## SEARCH: paste
